@@ -11,6 +11,7 @@ class Scanner:
             self.pos += 1
 
     def next_token(self) -> tuple:
+        """ Devuelve el siguiente token como una tupla (tipo, valor) """
         self._skip_whitespace()
         if self.pos >= len(self.line):
             return (None, None)

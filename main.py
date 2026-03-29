@@ -12,8 +12,11 @@ def main():
         print('El archivo no existe.')
         sys.exit(1)
     
-    with open(file_name, 'r') as file:
-        lineas = file.read().splitlines()
+    try:
+        with open(file_name, 'r') as file:
+            lineas = file.read().splitlines()
+    except IOError:
+        print(f"El fichero '{file_name}' está bloqueado o no se puede leer.")
 
     for linea in lineas:
         if linea.strip() == '':
