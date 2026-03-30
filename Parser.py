@@ -4,7 +4,7 @@ from Stack import Stack
 
 NO_TERMINALES = {'<Asignacion>', '<Expresion>', '<Resto_Expr>', '<Operando>', '<Valor>', '<Operador>'}
 
-def parser(scanner: Scanner) -> str:
+def parser(tokens: list) -> str:
     """
     Realiza un análisis léxico y sintáctico simultaneamente para evitar comprobaciones adicionales.
     Devuelve un mensaje de error o 'Correcto' si la línea es sintácticamente correcta.
@@ -13,7 +13,7 @@ def parser(scanner: Scanner) -> str:
     pila = Stack()
     pila.push('<Asignacion>')
 
-    token = scanner.next_token()
+    token = tokens.pop(0)
 
     while not pila.empty():
         cima = pila.peek()
@@ -46,7 +46,7 @@ def parser(scanner: Scanner) -> str:
                 return f'Error sintáctico en componente léxico {token[0]}'
 
             pila.pop()
-            token = scanner.next_token()
+            token = tokens.pop(0)
 
     # Pila vacia: comprobar que no quede contenido en la línea
     if token[0] is not None:

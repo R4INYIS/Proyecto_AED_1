@@ -1,38 +1,43 @@
 
 TOKENS_SIMPLES = {'-', ')', '+', '(', ';', '/', '*', '='}
 
-class Scanner:
-    def __init__(self, line: str):
-        self.line = line
-        self.pos = 0
+def skip_whitespace(line: str, pos: int) -> int:
+    while pos < len(line) and line[pos] == ' ':
+        pos += 1
+    return pos
 
-    def _skip_whitespace(self):
-        while self.pos < len(self.line) and self.line[self.pos] == ' ':
-            self.pos += 1
+def scanner(line: str) -> tuple:
+    """ Devuelve el siguiente token como una tupla (tipo, valor) """
+    pos = 0
+    tokens = []
 
-    def next_token(self) -> tuple:
-        """ Devuelve el siguiente token como una tupla (tipo, valor) """
-        self._skip_whitespace()
-        if self.pos >= len(self.line):
-            return (None, None)
+    while pos < len(line):
 
-        c = self.line[self.pos]
+        pos = skip_whitespace(line, pos)
+        c = line[pos]
 
-        if c in TOKENS_SIMPLES:
+        if pos >= len(line):
+            tokes.append((None, None))
+            return tokens
+
+        elif c in TOKENS_SIMPLES:
             token = c
-            self.pos += 1
-            return (c, c)
+            pos += 1
+            tokens.append((c, c))
 
-        if c.islower():
-            start = self.pos
-            while self.pos < len(self.line) and self.line[self.pos].islower():
-                self.pos += 1
-            return ('identificador', self.line[start:self.pos])
+        elif c.islower():
+            start = pos
+            while pos < len(line) and line[pos].islower():
+                pos += 1
+            tokens.append(('identificador', line[start:pos]))
 
-        if c.isdigit():
-            start = self.pos
-            while self.pos < len(self.line) and self.line[self.pos].isdigit():
-                self.pos += 1
-            return ('cte_ent', self.line[start:self.pos])
+        elif c.isdigit():
+            start = pos
+            while pos < len(line) and line[pos].isdigit():
+                pos += 1
+            tokens.append(('cte_ent', line[start:pos]))
 
-        return ("Error", "Error léxico en posición " + str(self.pos))
+        else:
+            return ("Error", "Error léxico en posición " + str(pos))
+
+    return tokens

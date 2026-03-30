@@ -1,5 +1,5 @@
 from Stack import Stack
-from Scanner import Scanner
+from Scanner import scanner
 from Parser import parser
 from rich import print
 import os
@@ -22,7 +22,11 @@ def main():
         if linea.strip() == '':
             continue
         print(linea)
-        print(parser(Scanner(linea)))
+        tokens = scanner(linea)
+        if isinstance(tokens, tuple) and tokens[0] == 'Error':
+            print(tokens[1])
+            continue
+        print(parser(tokens))
     
 if __name__ == '__main__':
     main()
