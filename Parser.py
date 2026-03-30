@@ -1,5 +1,4 @@
 from config import TABLA, PRODUCCIONES
-from Scanner import Scanner
 from Stack import Stack
 
 NO_TERMINALES = {'<Asignacion>', '<Expresion>', '<Resto_Expr>', '<Operando>', '<Valor>', '<Operador>'}
@@ -13,13 +12,10 @@ def parser(tokens: list) -> str:
     pila = Stack()
     pila.push('<Asignacion>')
 
-    token = tokens.pop(0)
+    token = tokens.pop(0) if tokens else (None, None) 
 
     while not pila.empty():
         cima = pila.peek()
-
-        if token[0] == 'Error':
-            return token[1]
 
         if cima in NO_TERMINALES:
             if token[0] is None:
@@ -46,7 +42,7 @@ def parser(tokens: list) -> str:
                 return f'Error sintáctico en componente léxico {token[0]}'
 
             pila.pop()
-            token = tokens.pop(0)
+            token = tokens.pop(0) if tokens else (None, None)
 
     # Pila vacia: comprobar que no quede contenido en la línea
     if token[0] is not None:

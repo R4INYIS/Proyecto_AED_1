@@ -14,13 +14,15 @@ def scanner(line: str) -> tuple:
     while pos < len(line):
 
         pos = skip_whitespace(line, pos)
-        c = line[pos]
+        
 
         if pos >= len(line):
-            tokes.append((None, None))
+            tokens.append((None, None))
             return tokens
 
-        elif c in TOKENS_SIMPLES:
+        c = line[pos]
+
+        if c in TOKENS_SIMPLES:
             token = c
             pos += 1
             tokens.append((c, c))
