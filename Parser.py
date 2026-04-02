@@ -12,7 +12,9 @@ def parser(tokens: list) -> str:
     pila = Stack()
     pila.push('<Asignacion>')
 
-    token = tokens.pop(0) if tokens else (None, None) 
+    tokens = iter(tokens)
+
+    token = next(tokens, (None, None))
 
     while not pila.empty():
         cima = pila.peek()
@@ -42,7 +44,7 @@ def parser(tokens: list) -> str:
                 return f'Error sintáctico en componente léxico {token[0]}'
 
             pila.pop()
-            token = tokens.pop(0) if tokens else (None, None)
+            token = next(tokens, (None, None))
 
     # Pila vacia: comprobar que no quede contenido en la línea
     if token[0] is not None:
