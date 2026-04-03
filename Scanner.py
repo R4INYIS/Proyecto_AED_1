@@ -6,15 +6,14 @@ def skip_whitespace(line: str, pos: int) -> int:
         pos += 1
     return pos
 
-def scanner(line: str) -> tuple:
-    """ Devuelve el siguiente token como una tupla (tipo, valor) """
+def scanner(line: str) -> list[tuple[str, str]]:
+    """ Devuelve todos los tokens como una lista de tuplas (tipo, valor) """
     pos = 0
     tokens = []
 
     while pos < len(line):
 
         pos = skip_whitespace(line, pos)
-        
 
         if pos >= len(line):
             tokens.append((None, None))

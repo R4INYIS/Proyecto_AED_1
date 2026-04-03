@@ -17,6 +17,7 @@ def main():
             lineas = file.read().splitlines()
     except IOError:
         print(f"El fichero '{file_name}' está bloqueado o no se puede leer.")
+        sys.exit(1)
 
     for linea in lineas:
         if linea.strip() == '':

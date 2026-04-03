@@ -5,7 +5,7 @@ NO_TERMINALES = {'<Asignacion>', '<Expresion>', '<Resto_Expr>', '<Operando>', '<
 
 def parser(tokens: list) -> str:
     """
-    Realiza un análisis léxico y sintáctico simultaneamente para evitar comprobaciones adicionales.
+    Realiza un análisis sintáctico de la línea usando la lista de tokens.
     Devuelve un mensaje de error o 'Correcto' si la línea es sintácticamente correcta.
     """
 
